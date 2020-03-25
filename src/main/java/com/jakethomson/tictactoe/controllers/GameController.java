@@ -4,8 +4,6 @@ import com.jakethomson.tictactoe.models.Game;
 import com.jakethomson.tictactoe.services.GameService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 public class GameController {
     private final GameService gameService;
@@ -25,8 +23,9 @@ public class GameController {
         }
     }
 
-    @GetMapping("/games/{game_id}")
-        Game getGame(@PathVariable long id) {
+    @GetMapping("/games/{id}")
+    public Game getGame(@PathVariable long id) {
         return gameService.getGame(id);
     }
+
 }

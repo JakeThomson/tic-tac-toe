@@ -13,12 +13,11 @@ public class GameService {
 
     private final GameRepository repository;
 
-    GameService(GameRepository repository) {
+    public GameService(GameRepository repository) {
         this.repository = repository;
     }
 
     public Game newGame(String player_x_id, String player_o_id) {
-        AtomicLong id = new AtomicLong();
         String[] board;
 
         if(player_x_id == "Server") {

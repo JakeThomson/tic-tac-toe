@@ -42,4 +42,7 @@ public class Game {
         return board;
     }
 
+    public void setBoard(String[] board) {
+        this.board = board;
+    }
 }
