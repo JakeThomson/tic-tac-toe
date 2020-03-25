@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 public class MoveController {
     private final MoveService moveService;
@@ -17,7 +19,7 @@ public class MoveController {
 
     @PostMapping("/games/{id}")
     public Game move(@PathVariable long id,
-                     @RequestBody String[] board) {
-        return moveService.move(id, board);
+                     @RequestBody Map<String, String[]> body) {
+        return moveService.move(id, body.get("board"));
     }
 }
