@@ -4,14 +4,18 @@ import com.jakethomson.tictactoe.models.Game;
 import com.jakethomson.tictactoe.services.GameService;
 import org.springframework.web.bind.annotation.*;
 
+/** Handles the endpoints for all actions involving game details. */
 @RestController
 public class GameController {
-    private final GameService gameService;
 
+    // Dependency injection.
+    private final GameService gameService;
     public GameController(GameService gameService) {
         this.gameService = gameService;
     }
 
+    // When a POST request to /games is made, a new game is created.
+    // TODO: Change request params to a request body input.
     @PostMapping("/games")
     public Game newGame(@RequestParam(value = "name", defaultValue = "Player") String name,
                         @RequestParam(value = "side", defaultValue = "X") String side) {
@@ -23,6 +27,8 @@ public class GameController {
         }
     }
 
+    /* Data of created games can be accessed at any point by sending a GET request
+       to the /games/{id} endpoint. */
     @GetMapping("/games/{id}")
     public Game getGame(@PathVariable long id) {
         return gameService.getGame(id);
