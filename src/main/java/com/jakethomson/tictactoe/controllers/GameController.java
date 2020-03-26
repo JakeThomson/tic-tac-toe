@@ -2,6 +2,8 @@ package com.jakethomson.tictactoe.controllers;
 
 import com.jakethomson.tictactoe.models.Game;
 import com.jakethomson.tictactoe.services.GameService;
+import com.jakethomson.tictactoe.services.MoveService;
+import com.jakethomson.tictactoe.services.ServerMoveService;
 import org.springframework.web.bind.annotation.*;
 
 /** Handles the endpoints for all actions involving game details. */

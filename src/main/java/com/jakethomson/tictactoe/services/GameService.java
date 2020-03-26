@@ -1,6 +1,5 @@
 package com.jakethomson.tictactoe.services;
 import com.jakethomson.tictactoe.models.Game;
-
 import com.jakethomson.tictactoe.repositories.GameRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +14,10 @@ public class GameService {
 
     // Dependency injection.
     private final GameRepository repository;
-    public GameService(GameRepository repository) {
+    private final ServerMoveService serverMoveService;
+    public GameService(GameRepository repository, ServerMoveService serverMoveService) {
         this.repository = repository;
+        this.serverMoveService = serverMoveService;
     }
 
     /**
@@ -31,7 +32,7 @@ public class GameService {
         String[] board;
 
         if(player_x_id == "Server") {
-            board = new String[]{"X  ", "   ", "   "};
+            board = serverMoveService.firstMove();
         } else {
             board = new String[]{"   ", "   ", "   "};
         }
