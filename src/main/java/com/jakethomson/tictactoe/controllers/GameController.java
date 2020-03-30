@@ -2,9 +2,9 @@ package com.jakethomson.tictactoe.controllers;
 
 import com.jakethomson.tictactoe.models.Game;
 import com.jakethomson.tictactoe.services.GameService;
-import com.jakethomson.tictactoe.services.MoveService;
-import com.jakethomson.tictactoe.services.ServerMoveService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /** Handles the endpoints for all actions involving game details. */
 @RestController
@@ -17,10 +17,10 @@ public class GameController {
     }
 
     // When a POST request to /games is made, a new game is created.
-    // TODO: Change request params to a request body input.
     @PostMapping("/games")
-    public Game newGame(@RequestParam(value = "name", defaultValue = "Player") String name,
-                        @RequestParam(value = "side", defaultValue = "X") String side) {
+    public Game newGame(@RequestBody Map<String, String> body) {
+        String name = body.get("name");
+        String side = body.get("side");
 
         if(side.toUpperCase().equals("X")) {
             return gameService.newGame(name, "Server");

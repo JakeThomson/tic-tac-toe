@@ -11,10 +11,11 @@ public class MoveService {
 
     // Dependency injection.
     private final GameRepository repository;
-    private final GameService gameService;
-    public MoveService(GameRepository repository, GameService gameService) {
+    private final ServerMoveService serverMoveService;
+
+    public MoveService(GameRepository repository, ServerMoveService serverMoveService) {
         this.repository = repository;
-        this.gameService = gameService;
+        this.serverMoveService = serverMoveService;
     }
 
     /**
@@ -27,6 +28,8 @@ public class MoveService {
     public Game move(long id, String[] board) {
         Game game = repository.findById(id);
         game.setBoard(board);
+
+        serverMoveService.makeBestMove(game.getBoard(), "X");
 
         repository.save(game);
 

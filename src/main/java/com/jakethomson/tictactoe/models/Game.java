@@ -20,6 +20,10 @@ public class Game {
     private String player_o_id;
     private String[] board;
 
+    // Default constructor.
+    // TODO: Understand why this is being required when loading from repository.
+    public Game() {}
+
     // Constructor
     public Game(String player_x_id, String player_o_id, String[] board) {
         this.player_x_id = player_x_id;
