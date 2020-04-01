@@ -25,12 +25,11 @@ public class MoveService {
     /**
      * Creates a new Game object and save it to the repository.
      *
-     * @param id - The id of the game to send a move to.
-     * @param board - the new state of the board with the move to be made placed.
+     * @param game - The id of the game to send a move to.
+     * @param board - The new state of the board with the move to be made placed.
      * @return the new state of the {@link Game}, after the server has made it's next turn.
      */
-    public Game move(long id, String[] board) {
-        Game game = repository.findById(id);
+    public Game move(Game game, String[] board) {
         game.setBoard(board);
         String serverSide, playerSide;
         if(game.getPlayer_x_id().equals("Server")) {
