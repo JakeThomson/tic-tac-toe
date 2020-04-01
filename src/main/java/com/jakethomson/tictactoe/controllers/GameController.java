@@ -17,6 +17,7 @@ public class GameController {
     }
 
     // When a POST request to /games is made, a new game is created.
+    @CrossOrigin(origins = "null")
     @PostMapping("/games")
     public Game newGame(@RequestBody Map<String, String> body) {
         String name = body.get("name");

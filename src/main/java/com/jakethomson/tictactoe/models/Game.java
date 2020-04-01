@@ -19,6 +19,7 @@ public class Game {
     private String player_x_id;
     private String player_o_id;
     private String[] board;
+    private Enum status;
 
     // Default constructor.
     // TODO: Understand why this is being required when loading from repository.
@@ -29,12 +30,31 @@ public class Game {
         this.player_x_id = player_x_id;
         this.player_o_id = player_o_id;
         this.board = board;
+        this.status = gameStatus.IN_PROGRESS;
     }
 
-    // Getters and board setter.
+    public enum gameStatus{
+        IN_PROGRESS, PLAYER_X_WIN, PLAYER_O_WIN, DRAW
+    }
+
+    // Getters and status/board setter.
     public long getId() { return id; }
     public String getPlayer_x_id() { return player_x_id; }
     public String getPlayer_o_id() { return player_o_id; }
     public String[] getBoard() { return board; }
+    public Enum getStatus() { return status; }
     public void setBoard(String[] board) { this.board = board; }
+    public void setStatus(String status) {
+        switch(status){
+            case "X":
+                this.status = gameStatus.PLAYER_X_WIN;
+                break;
+            case "O":
+                this.status = gameStatus.PLAYER_O_WIN;
+                break;
+            case "DRAW":
+                this.status = gameStatus.DRAW;
+                break;
+        }
+    }
 }

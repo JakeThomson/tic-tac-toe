@@ -11,12 +11,16 @@ public class MoveService {
 
     // Dependency injection.
     private final GameRepository repository;
+    private final GameService gameService;
     private final ServerMoveService serverMoveService;
 
-    public MoveService(GameRepository repository, ServerMoveService serverMoveService) {
+    public MoveService(GameRepository repository, ServerMoveService serverMoveService, GameService gameService) {
         this.repository = repository;
         this.serverMoveService = serverMoveService;
+        this.gameService = gameService;
     }
+
+
 
     /**
      * Creates a new Game object and save it to the repository.
@@ -28,11 +32,40 @@ public class MoveService {
     public Game move(long id, String[] board) {
         Game game = repository.findById(id);
         game.setBoard(board);
+        String serverSide, playerSide;
+        if(game.getPlayer_x_id().equals("Server")) {
+            serverSide = "X";
+            playerSide = "O";
+        } else {
+            serverSide = "O";
+            playerSide = "X";
+        }
 
-        serverMoveService.makeBestMove(game.getBoard(), "X");
+        if(!checkForEnd(board, game, playerSide)) {
+            serverMoveService.makeBestMove(game.getBoard(), serverSide);
+            checkForEnd(board, game, serverSide);
+        }
 
         repository.save(game);
 
         return game;
+    }
+
+    public boolean checkForEnd(String[] board, Game game, String side) {
+        int status = serverMoveService.checkGameStatus(board, side);
+        if(status == +10) {
+            game.setStatus(side);
+            return true;
+        } else if(status == -10) {
+            if(side.equals("X"))
+                game.setStatus("O");
+            else if(side.equals("O"))
+                game.setStatus("X");
+            return true;
+        } else if(status == 0 && serverMoveService.getRemainingMoves(board).equals("")) {
+            game.setStatus("DRAW");
+            return true;
+        }
+        return false;
     }
 }
