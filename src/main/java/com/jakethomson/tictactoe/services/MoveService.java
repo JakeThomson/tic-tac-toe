@@ -25,7 +25,7 @@ public class MoveService {
     /**
      * Creates a new Game object and save it to the repository.
      *
-     * @param game - The id of the game to send a move to.
+     * @param game - A {@link Game} object holding all information on the current game.
      * @param board - The new state of the board with the move to be made placed.
      * @return the new state of the {@link Game}, after the server has made it's next turn.
      */
@@ -50,6 +50,14 @@ public class MoveService {
         return game;
     }
 
+    /**
+     * Checks to see if the game has come to an end.
+     *
+     * @param board - A string array holding the contents of the current board.
+     * @param game - A {@link Game} object holding all information on the current game.
+     * @param side
+     * @return
+     */
     public boolean checkForEnd(String[] board, Game game, String side) {
         int status = serverMoveService.checkGameStatus(board, side);
         if(status == +10) {

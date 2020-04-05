@@ -7,6 +7,14 @@ import org.springframework.web.server.ResponseStatusException;
 /** ValidationService handles the logic for validating input data. */
 @Service
 public class ValidationService {
+    /**
+     * Verifies the input data contains a valid move.
+     *
+     * @param currentBoard - A string array holding the current contents of the board.
+     * @param newBoard - A string array holding the updated contents of the board.
+     * @param playerSide - A char holding what symbol the player is.
+     * @return true if data is valid, it will throw an exception in any other case.
+     */
     public boolean validateMoveInput(String[] currentBoard, String[] newBoard, char playerSide) {
         // Ensure only one change has been made to the board.
         int changeCount = 0;

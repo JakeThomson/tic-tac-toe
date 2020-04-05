@@ -1,7 +1,6 @@
 package com.jakethomson.tictactoe.services;
 
 import org.springframework.stereotype.Service;
-import com.jakethomson.tictactoe.models.Game;
 import java.util.Random;
 
 import static java.lang.Math.*;
@@ -117,7 +116,7 @@ class ServerMoveService {
     }
 
     /**
-     *  Check the board for positions available to make moves into.
+     * Check the board for positions available to make moves into.
      *
      * @param board - A string array holding the current information of the board.
      * @return a string of numbers that represent each position of the board that is free.
