@@ -4,6 +4,7 @@ import com.jakethomson.tictactoe.models.Game;
 import com.jakethomson.tictactoe.services.GameService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /** Handles the endpoints for all actions involving game details. */
@@ -30,10 +31,15 @@ public class GameController {
         }
     }
 
+    @GetMapping("/games")
+    public List<Game> getAllGames() {
+            return gameService.getAllGames();
+    }
+
     /* Data of created games can be accessed at any point by sending a GET request
        to the /games/{id} endpoint. */
     @GetMapping("/games/{id}")
-    public Game getGame(@PathVariable long id) {
+    public Game getGame(@PathVariable int id) {
         return gameService.getGame(id);
     }
 

@@ -3,9 +3,7 @@ import com.jakethomson.tictactoe.models.Game;
 import com.jakethomson.tictactoe.repositories.GameRepository;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 /** GameService handles all the logic for the creation and reference of new games.
  *  It also saves and loads game data to/from the repository. */
@@ -31,7 +29,7 @@ public class GameService {
     public Game newGame(String player_x_id, String player_o_id) {
         String[] board;
 
-        if(player_x_id == "Server") {
+        if(player_x_id.equals("Server")) {
             board = serverMoveService.firstMove();
         } else {
             board = new String[]{"   ", "   ", "   "};
@@ -43,7 +41,11 @@ public class GameService {
         return game;
     }
 
-    public Game getGame(long id){
+    public Game getGame(int id){
         return repository.findById(id);
+    }
+
+    public List<Game> getAllGames() {
+        return repository.findAll();
     }
 }
