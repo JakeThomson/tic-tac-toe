@@ -161,7 +161,7 @@ class ServerMoveService {
                 nextSide = "X";
             else
                 nextSide = "O";
-            int moveVal = miniMax(board, 0, newRemaining, nextSide, false);
+            int moveVal = miniMax(board, 0, newRemaining, nextSide, serverSide, false);
             // Undo the move
             makeMove(board, pos, " ");
 
@@ -186,9 +186,9 @@ class ServerMoveService {
      * @param isMaximizingPlayer - Switches from true to false for every new recursive call.
      * @return the value of the best outcome.
      */
-    private int miniMax(String[] board, int depth, String remaining, String side, boolean isMaximizingPlayer) {
+    private int miniMax(String[] board, int depth, String remaining, String side, String serverSide, boolean isMaximizingPlayer) {
 
-        int score = checkGameStatus(board, side);
+        int score = checkGameStatus(board, serverSide);
 
         // If game has ended, return the score.
         if(score == 10 || score == -10) {
@@ -215,7 +215,7 @@ class ServerMoveService {
                         nextSide = "O";
                     else
                         nextSide = "X";
-                    bestVal = max(bestVal, miniMax(board, depth + 1, newRemaining, nextSide, !isMaximizingPlayer));
+                    bestVal = max(bestVal, miniMax(board, depth + 1, newRemaining, nextSide, serverSide, !isMaximizingPlayer));
                     // Undo the move.
                     makeMove(board, i, " ");
                 }
@@ -238,7 +238,7 @@ class ServerMoveService {
                         nextSide = "X";
                     else
                         nextSide = "O";
-                    bestVal = min(bestVal, miniMax(board, depth + 1, newRemaining, nextSide, !isMaximizingPlayer));
+                    bestVal = min(bestVal, miniMax(board, depth + 1, newRemaining, nextSide, serverSide, !isMaximizingPlayer));
                     // Undo the move.
                     makeMove(board, i, " ");
                 }
