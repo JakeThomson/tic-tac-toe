@@ -7,7 +7,7 @@ import static java.lang.Math.*;
 
 /** MoveService handles all the logic and implementation of the server moves. */
 @Service
-class ServerMoveService {
+public class ServerMoveService {
 
     private static final Random random = new Random();
     private static final int TOP_LEFT = 0;
