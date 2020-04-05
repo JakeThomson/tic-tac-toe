@@ -22,14 +22,21 @@ public class MoveController {
         this.validationService = validationService;
     }
 
-    /* When a POST request to /games/{id} is made, the game with the
-       matching id is updated using the information in the request body. */
+    /**
+     * When a POST request to /games/{id} is made, the game with the
+     * matching id is updated using the information in the request body.
+     *
+     * @param id - The id of the game to send a move to.
+     * @param body - A JSON object holding the board information with the player's move inputted,
+     *               formatted as { "board": ["   ", "   ", "   "] }
+     * @return - The selected game object with the server's move added.
+     */
     @PostMapping("/games/{id}")
-    public Game move(@PathVariable long id,
+    public Game move(@PathVariable int id,
                      @RequestBody Map<String, String[]> body) {
         Game game = repository.findById(id);
         char playerSide;
-        if(game.getPlayer_x_id() == "Server")
+        if(game.getPlayer_x_id().equals("Server"))
             playerSide = 'O';
         else
             playerSide = 'X';
