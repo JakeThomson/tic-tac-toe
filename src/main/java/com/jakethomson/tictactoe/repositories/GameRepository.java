@@ -1,10 +1,8 @@
 package com.jakethomson.tictactoe.repositories;
 
 import com.jakethomson.tictactoe.models.Game;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface GameRepository extends CrudRepository<Game, Long> {
-    Game findById(long id);
+public interface GameRepository extends JpaRepository<Game, Long> {
+    Game findById(int id);
 }
