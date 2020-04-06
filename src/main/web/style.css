@@ -23,6 +23,10 @@ button {
   background: none;
   transition: all 0.2s ease-in-out;
 }
+button.close {
+  border: none;
+  padding: none;
+}
 
 button:hover {
   cursor: pointer;

@@ -23,6 +23,9 @@ const GameCtrl = (function() {
     this.getStatus = function() {
       return this.status;
     };
+    this.getPlayerXId = function() {
+      return this.player_x_id;
+    };
     this.setBoard = function(newBoard) {
       this.board = newBoard;
     };
@@ -94,7 +97,6 @@ const GameCtrl = (function() {
       const body = {
         board: board
       };
-
       axios.post(`http://localhost:8080/games/${id}`, body).then(
         response => {
           const data = response.data;
@@ -127,7 +129,9 @@ const UICtrl = (function() {
   const UISelectors = {
     gameContainer: ".game-container",
     buttons: ".buttons",
-    newGameBtn: "#new-game",
+    newGameBtn: "#new-game-submit",
+    newGameX: "#new-game-x",
+    newGameO: "#new-game-o",
     board: ".board",
     blocks: ["#b0", "#b1", "#b2", "#b3", "#b4", "#b5", "#b6", "#b7", "#b8"],
     gameStatus: ".game-status",
@@ -158,7 +162,7 @@ const UICtrl = (function() {
             <div id="b8" class="block"></div>
           </div>`;
         document.querySelector(UISelectors.buttons).innerHTML = `
-          <button id="new-game" type="button" class="new">
+          <button id="new-game" type="button" class="new" data-toggle="modal" data-target="#locModal">
             NEW GAME
           </button>
           <button id="prev-game" type="button" class="prev">
@@ -172,6 +176,11 @@ const UICtrl = (function() {
     },
     drawGame: function(id) {
       game = games[id];
+      if (game.getPlayerXId() === "Player") {
+        side = "X";
+      } else {
+        side = "O";
+      }
       for (i = 0; i < 9; i++) {
         let board = game.getBoard();
         const row = Math.floor(i / 3);
@@ -231,24 +240,6 @@ const App = (function(GameCtrl, UICtrl) {
   const loadEventListeners = function() {
     // Get UI Selectors
     const UISelectors = UICtrl.getSelectors();
-
-    // New game event
-    document
-      .querySelector(UISelectors.newGameBtn)
-      .addEventListener("click", function() {
-        side = (function() {
-          side = window.prompt("Enter your side (X or O)", "O");
-          return side;
-        })();
-        try {
-          if (GameCtrl.newGame(side) === false) {
-            throw error;
-          }
-          UICtrl.drawBoard();
-        } catch (error) {
-          window.alert("Server is not running.");
-        }
-      });
     if (
       document.querySelector(UISelectors.gameContainer).innerHTML.trim() !==
       "<h1>Tic-Tac-Toe</h1>"
@@ -258,7 +249,10 @@ const App = (function(GameCtrl, UICtrl) {
         document
           .querySelector(UISelectors.blocks[i])
           .addEventListener("click", function(e) {
-            if (e.target.innerHTML == "" && game.getStatus() === "IN_PROGRESS") {
+            if (
+              e.target.innerHTML == "" &&
+              game.getStatus() === "IN_PROGRESS"
+            ) {
               e.target.innerHTML = side;
               e.target.classList.add("occupied");
               GameCtrl.makeMove(side, e.target.id);
@@ -268,7 +262,7 @@ const App = (function(GameCtrl, UICtrl) {
     }
     if (
       document.querySelector(UISelectors.buttons).innerHTML.trim() !==
-      `<button id="new-game" type="button" class="new">
+      `<button id="new-game" type="button" class="new" data-toggle="modal" data-target="#locModal">
           NEW GAME
         </button>`
     ) {
@@ -284,6 +278,17 @@ const App = (function(GameCtrl, UICtrl) {
         .addEventListener("click", function() {
           GameCtrl.nextGame();
         });
+    }
+  };
+
+  const startNewGame = function(side) {
+    try {
+      if (GameCtrl.newGame(side) === false) {
+        throw error;
+      }
+      UICtrl.drawBoard();
+    } catch (error) {
+      window.alert("Server is not running.");
     }
   };
 
@@ -311,6 +316,19 @@ const App = (function(GameCtrl, UICtrl) {
     init: function() {
       GameCtrl.getGames();
       loadEventListeners();
+      // New game event
+      document
+        .querySelector(UICtrl.getSelectors().newGameX)
+        .addEventListener("click", function() {
+          side = "X";
+          startNewGame("X");
+        });
+      document
+        .querySelector(UICtrl.getSelectors().newGameO)
+        .addEventListener("click", function() {
+          side = "O";
+          startNewGame("O");
+        });
     },
     reloadListeners: function() {
       loadEventListeners();
