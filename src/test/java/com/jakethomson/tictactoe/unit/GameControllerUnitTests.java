@@ -36,18 +36,20 @@ public class GameControllerUnitTests {
     @Test
     public void givenBody_whenNewGame_thenReturnJsonArray()
             throws Exception {
-        Game game = new Game("Server", "Player", new String[] {"   ", "   ", "   "});
-
-        given(gameService.newGame("Server", "Player")).willReturn(game);
-
+        //Given
+        Game game = new Game("Player", "Server", new String[] {"   ", "   ", "   "});
+        given(gameService.newGame("Player", "Server")).willReturn(game);
         ObjectMapper mapperObj = new ObjectMapper();
         Map<String, String> body = Map.of("name", "Player",
                 "side", "X");
 
+        // When
         mvc.perform(post("/games")
                 .content(mapperObj.writeValueAsString(body))
                 .characterEncoding("UTF-8")
                 .contentType(MediaType.APPLICATION_JSON))
+
+        // Then
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", hasSize(5)))
                 .andExpect(jsonPath("$.id", is(game.getId())));
