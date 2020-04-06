@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+.container {
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+button {
+  outline: none;
+  border: 4px solid black;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: none;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  cursor: pointer;
+  background: rgb(218, 102, 102);
+  color: white;
+}
+
+.button[disabled],
+.button[disabled]:hover {
+  outline: none;
+  border: 4px solid rgb(168, 168, 168);
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: grey;
+  background: white;
+  transition: none;
+  pointer-events: none;
+}
+
+.board {
+  display: grid;
+  width: 300px;
+  height: 300px;
+  grid-template-columns: auto auto auto;
+}
+.block {
+  display: flex;
+  width: 100px;
+  height: 100px;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  font-weight: bold;
+  border: 3px solid black;
+  transition: background 0.2s ease-in-out;
+}
+
+.block:hover {
+  cursor: pointer;
+  background: #f5f5f5;
+}
+
+.occupied:hover {
+  background: #ffd2d2;
+}
+
+#b0,
+#b1,
+#b2 {
+  border-top: none;
+}
+
+#b0,
+#b3,
+#b6 {
+  border-left: none;
+}
+
+#b6,
+#b7,
+#b8 {
+  border-bottom: none;
+}
+
+#b2,
+#b5,
+#b8 {
+  border-right: none;
+}
