@@ -31,6 +31,7 @@ public class MoveController {
      *               formatted as { "board": ["   ", "   ", "   "] }
      * @return - The selected game object with the server's move added.
      */
+    @CrossOrigin(origins = "null")
     @PostMapping("/games/{id}")
     public Game move(@PathVariable int id,
                      @RequestBody Map<String, String[]> body) {
